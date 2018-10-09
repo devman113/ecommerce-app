@@ -15,6 +15,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
+import SearchBox from './SearchBox';
+
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -159,8 +161,9 @@ class PersistentDrawer extends React.Component {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" color="inherit" noWrap>
-                Persistent drawer
+                Source Squad
               </Typography>
+              <SearchBox />
             </Toolbar>
           </AppBar>
           {before}
