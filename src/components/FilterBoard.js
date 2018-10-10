@@ -14,6 +14,9 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 const styles = theme => ({
   card: {
@@ -184,10 +187,30 @@ class FilterBoard  extends React.Component {
                     <Typography className={classes.heading}>Source Sites</Typography>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
-                    <Typography>
-                      Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
-                      maximus est, id dignissim quam.
-                    </Typography>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={this.state.checkedTaobao}
+                            onChange={this.handleChange('checkedTaobao')}
+                            value="checkedTaobao"
+                            color="primary"
+                          />
+                        }
+                        label="Taobao"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={this.state.checkedAlibaba}
+                            onChange={this.handleChange('checkedAlibaba')}
+                            value="checkedAlibaba"
+                            color="primary"
+                          />
+                        }
+                        label="Alibaba"
+                      />
+                    </FormGroup>
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
                 <ExpansionPanel expanded={expanded === 'panel2'} onChange={this.handleExpansionChange('panel2')}>
@@ -195,10 +218,30 @@ class FilterBoard  extends React.Component {
                     <Typography className={classes.heading}>General</Typography>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
-                    <Typography>
-                      Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus, varius pulvinar
-                      diam eros in elit. Pellentesque convallis laoreet laoreet.
-                    </Typography>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={this.state.checkedListView}
+                            onChange={this.handleChange('checkedListView')}
+                            value="checkedListView"
+                            color="primary"
+                          />
+                        }
+                        label="List View"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={this.state.checkedShowImages}
+                            onChange={this.handleChange('checkedShowImages')}
+                            value="checkedShowImages"
+                            color="primary"
+                          />
+                        }
+                        label="Show Images"
+                      />
+                    </FormGroup>
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
               </div>
