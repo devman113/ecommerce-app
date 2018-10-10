@@ -10,6 +10,10 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const styles = theme => ({
   card: {
@@ -48,7 +52,17 @@ const styles = theme => ({
   },
   submitButton: {
     marginLeft: 16,
-  }
+  },
+  panelContainer: {
+    marginTop: 30,
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    flexBasis: '33.33%',
+    flexShrink: 0,
+  },
 });
 
 const currencies = [
@@ -72,6 +86,7 @@ const currencies = [
 class FilterBoard  extends React.Component {
   state = {
     currency: 'USD',
+    expanded: null,
   };
 
   handleChange = name => event => {
@@ -80,9 +95,16 @@ class FilterBoard  extends React.Component {
     });
   };
 
+  handleExpansionChange = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false,
+    });
+  };
+
   render() {
     const { classes } = this.props;
-    const bull = <span className={classes.bullet}>•</span>;
+    const { expanded } = this.state;
+
     return (
       <Grid container spacing={24}>
         <Grid item xs={12} sm={3}>
@@ -156,9 +178,33 @@ class FilterBoard  extends React.Component {
                   </option>
                 ))}
               </TextField>
+              <div className={classes.panelContainer}>
+                <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleExpansionChange('panel1')}>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography className={classes.heading}>Source Sites</Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <Typography>
+                      Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
+                      maximus est, id dignissim quam.
+                    </Typography>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+                <ExpansionPanel expanded={expanded === 'panel2'} onChange={this.handleExpansionChange('panel2')}>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography className={classes.heading}>General</Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <Typography>
+                      Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus, varius pulvinar
+                      diam eros in elit. Pellentesque convallis laoreet laoreet.
+                    </Typography>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              </div>
             </CardContent>
             <CardActions>
-              <Button size="small" className={classes.submitButton}>Learn More</Button>
+              <Button className={classes.submitButton}>Learn More</Button>
             </CardActions>
           </Card>
         </Grid>
