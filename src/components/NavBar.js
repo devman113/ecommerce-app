@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,6 +13,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import SearchBox from './SearchBox';
 import FilterBoard from './FilterBoard';
+import TableView from './TableView';
 
 const drawerWidth = 240;
 
@@ -111,11 +113,11 @@ class PersistentDrawer extends React.Component {
 
   updateKeyword = search => {
     this.setState({ search });
-    this.props.updateGoods(this.state);
+    this.props.updateGoods({ ...this.state, search });
   }
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, productsList } = this.props;
     const { anchor, open } = this.state;
 
     const drawer = (
@@ -176,7 +178,10 @@ class PersistentDrawer extends React.Component {
             })}
           >
             <div className={classes.drawerHeader} />
-            <FilterBoard />
+              <Grid container spacing={24}>
+                <FilterBoard />
+                <TableView />
+              </Grid>
           </main>
           {after}
         </div>

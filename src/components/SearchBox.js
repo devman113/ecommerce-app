@@ -48,6 +48,17 @@ const styles = theme => ({
 });
 
 class PrimarySearchAppBar extends React.Component {
+    state = {
+        search: ''
+    }
+    handleKeyPress = e => {
+        if (e.key === 'Enter') {
+            this.props.updateKeyword(this.state.search);
+        }
+    }
+    handleChange = e => {
+        this.setState({ search: e.target.value });
+    }
     render() {
         const { classes } = this.props;
         return (
@@ -61,7 +72,8 @@ class PrimarySearchAppBar extends React.Component {
                         root: classes.inputRoot,
                         input: classes.inputInput,
                     }}
-                    onChange={e => this.props.updateKeyword(e.target.value)}
+                    onChange={this.handleChange}
+                    onKeyPress={this.handleKeyPress}
                 />
             </div>
         );

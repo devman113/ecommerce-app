@@ -104,8 +104,7 @@ class FilterBoard  extends React.Component {
     const { expanded } = this.state;
 
     return (
-      <Grid container spacing={24}>
-        <Grid item xs={12} sm={3}>
+        <Grid item sm={3}>
           <Card className={classes.card}>
             <CardContent>
               <Typography className={classes.title}>
@@ -246,7 +245,6 @@ class FilterBoard  extends React.Component {
             </CardActions>
           </Card>
         </Grid>
-      </Grid>
     );
   }
 }

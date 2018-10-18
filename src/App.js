@@ -19,9 +19,9 @@ class App extends Component {
 
   render() {
     const { productsList } = this.props; 
-    console.log(productsList);
+
     return (
-      <NavBar updateGoods={this.updateGoods} />
+      <NavBar updateGoods={this.updateGoods} productsList={productsList} />
     );
   }
 }
