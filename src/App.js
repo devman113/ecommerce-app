@@ -9,14 +9,19 @@ class App extends Component {
 
   componentWillMount() {
     const { getList } = this.props;
-    getList();
+    getList(null);
+  }
+
+  updateGoods = options => {
+    const { getList } = this.props;
+    getList(options);
   }
 
   render() {
     const { productsList } = this.props; 
     console.log(productsList);
     return (
-      <NavBar />
+      <NavBar updateGoods={this.updateGoods} />
     );
   }
 }

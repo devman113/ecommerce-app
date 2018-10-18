@@ -61,6 +61,7 @@ class PrimarySearchAppBar extends React.Component {
                         root: classes.inputRoot,
                         input: classes.inputInput,
                     }}
+                    onChange={e => this.props.updateKeyword(e.target.value)}
                 />
             </div>
         );

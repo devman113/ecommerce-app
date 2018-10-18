@@ -98,6 +98,7 @@ class PersistentDrawer extends React.Component {
   state = {
     open: false,
     anchor: 'left',
+    search: ''
   };
 
   handleDrawerOpen = () => {
@@ -107,6 +108,11 @@ class PersistentDrawer extends React.Component {
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
+
+  updateKeyword = search => {
+    this.setState({ search });
+    this.props.updateGoods(this.state);
+  }
 
   render() {
     const { classes, theme } = this.props;
@@ -159,7 +165,7 @@ class PersistentDrawer extends React.Component {
               <h3>
                 Source Squad
               </h3>
-              <SearchBox />
+              <SearchBox updateKeyword={this.updateKeyword} />
             </Toolbar>
           </AppBar>
           {before}

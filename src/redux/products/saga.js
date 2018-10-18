@@ -2,22 +2,26 @@ import { all, takeEvery, put, fork } from 'redux-saga/effects';
 import axios from 'axios';
 import actions from './actions';
 
-const getProducts = async () => {
+const getProducts = async (payload) => {
   try {
-    return await axios.get('http://www.thecocktaildb.com/api/json/v1/1/filter.php?g=Cocktail_glass');
+    let url = 'http://localhost:7001/api/v1/items?itemTitle=a&framePosition=0&frameSize=20';
+    if (payload) {
+      if (payload.search !== '') url = `${url}&itemTitle=${payload.search}`;
+    }
+    return await axios.get(url);
   } catch (error) {
     console.error(error);
   }
 };
 
 export function* listRequest() {
-  yield takeEvery('PRODUCTS_LIST_REQUEST', function* () {
-    const productsData = yield getProducts();
+  yield takeEvery('PRODUCTS_LIST_REQUEST', function* ({ payload }) {
+    const productsData = yield getProducts(payload);
     if (productsData) {
       console.log('Successfully fetched products list.');
       yield put({
         type: actions.PRODUCTS_LIST_SUCCESS,
-        payload: productsData
+        payload: productsData.data.OtapiItemSearchResultAnswer.Result[0].Items[0].Content[0].Item
       });
     } else {
       console.log('Failed to fetch products list.');
