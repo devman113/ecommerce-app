@@ -93,6 +93,13 @@ class FilterBoard  extends React.Component {
     });
   };
 
+  handleCheckChange = name => event => {
+    this.setState({
+      [name]: event.target.checked,
+    });
+    this.props.updateChecked(name, event.target.checked);
+  };
+
   handleExpansionChange = panel => (event, expanded) => {
     this.setState({
       expanded: expanded ? panel : false,
@@ -186,7 +193,7 @@ class FilterBoard  extends React.Component {
                         control={
                           <Switch
                             checked={this.state.checkedTaobao}
-                            onChange={this.handleChange('checkedTaobao')}
+                            onChange={this.handleCheckChange('checkedTaobao')}
                             value="checkedTaobao"
                             color="primary"
                           />
@@ -197,7 +204,7 @@ class FilterBoard  extends React.Component {
                         control={
                           <Switch
                             checked={this.state.checkedAlibaba}
-                            onChange={this.handleChange('checkedAlibaba')}
+                            onChange={this.handleCheckChange('checkedAlibaba')}
                             value="checkedAlibaba"
                             color="primary"
                           />
@@ -217,7 +224,7 @@ class FilterBoard  extends React.Component {
                         control={
                           <Switch
                             checked={this.state.checkedListView}
-                            onChange={this.handleChange('checkedListView')}
+                            onChange={this.handleCheckChange('checkedListView')}
                             value="checkedListView"
                             color="primary"
                           />
@@ -228,7 +235,7 @@ class FilterBoard  extends React.Component {
                         control={
                           <Switch
                             checked={this.state.checkedShowImages}
-                            onChange={this.handleChange('checkedShowImages')}
+                            onChange={this.handleCheckChange('checkedShowImages')}
                             value="checkedShowImages"
                             color="primary"
                           />

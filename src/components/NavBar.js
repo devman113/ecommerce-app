@@ -115,9 +115,16 @@ class PersistentDrawer extends React.Component {
     this.props.updateGoods({ ...this.state, search });
   }
 
+  updateChecked = (name, checked) => {
+    this.setState({
+      [name]: checked,
+    });
+    console.log(name, checked)
+  }
+
   render() {
     const { classes, theme, productsList } = this.props;
-    const { anchor, open } = this.state;
+    const { anchor, open, checkedShowImages } = this.state;
 
     const drawer = (
       <Drawer
@@ -178,8 +185,13 @@ class PersistentDrawer extends React.Component {
           >
             <div className={classes.drawerHeader} />
               <Grid container spacing={24}>
-                <FilterBoard />
-                <TableView productsList={productsList} />
+                <FilterBoard 
+                  updateChecked={this.updateChecked}
+                />
+                <TableView 
+                  productsList={productsList} 
+                  checkedShowImages={checkedShowImages}
+                />
               </Grid>
           </main>
           {after}
