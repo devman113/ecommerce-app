@@ -134,16 +134,10 @@ class CustomPaginationActionsTable extends React.Component {
   };
 
   componentWillReceiveProps(props) {
-    const { productsList, classes, checkedShowImages } = props;
+    const { productsList, classes } = props;
     const rows = productsList ? productsList.map((product, i) => 
-    checkedShowImages ?
       createData(
         <img src={product['MainPictureUrl'][0]} alt={i} width={30} />,
-        <a href={product.ExternalItemUrl[0]} className={classes.link} target='_blank'>{product['OriginalTitle'][0]}</a>,
-        product['Price'][0]['ConvertedPrice'],
-        product['VendorName'][0],
-        product['ProviderType'][0]
-      ) : createData(
         <a href={product.ExternalItemUrl[0]} className={classes.link} target='_blank'>{product['OriginalTitle'][0]}</a>,
         product['Price'][0]['ConvertedPrice'],
         product['VendorName'][0],
@@ -176,9 +170,13 @@ class CustomPaginationActionsTable extends React.Component {
                 {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                   return (
                     <TableRow key={row.id}>
-                      <TableCell component="th" scope="row">
-                        {row.img}
-                      </TableCell>
+                      { 
+                        checkedShowImages && (
+                          <TableCell component="th" scope="row">
+                          {row.img}
+                        </TableCell>
+                        )
+                      }
                       <TableCell>{row.name}</TableCell>
                       <TableCell numeric>{row.price}</TableCell>
                       <TableCell>{row.vendor}</TableCell>
