@@ -22,7 +22,6 @@ const styles = theme => ({
     flexGrow: 1,
   },
   appFrame: {
-    height: '100vh',
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
@@ -180,7 +179,7 @@ class PersistentDrawer extends React.Component {
             <div className={classes.drawerHeader} />
               <Grid container spacing={24}>
                 <FilterBoard />
-                <TableView />
+                <TableView productsList={productsList} />
               </Grid>
           </main>
           {after}

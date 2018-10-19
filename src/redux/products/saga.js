@@ -21,7 +21,6 @@ export function* listRequest() {
   yield takeEvery('PRODUCTS_LIST_REQUEST', function* ({ payload }) {
     const productsData = yield getProducts(payload);
     if (productsData) {
-      console.log('Successfully fetched products list.', productsData);
       if (productsData.data.OtapiItemSearchResultAnswer)
         yield put({
           type: actions.PRODUCTS_LIST_SUCCESS,

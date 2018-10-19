@@ -7,6 +7,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
+import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
@@ -56,7 +57,7 @@ class TablePaginationActions extends React.Component {
           {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
         </IconButton>
         <IconButton
-          onClick={this.handleBackButtonClick}
+          onClick={this.handleBackButtonClick} 
           disabled={page === 0}
           aria-label="Previous Page"
         >
@@ -95,15 +96,15 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: tru
 );
 
 let counter = 0;
-function createData(name, calories, fat) {
+function createData(img, name, price, vendor, source) {
   counter += 1;
-  return { id: counter, name, calories, fat };
+  return { id: counter, img, name, price, vendor, source };
 }
 
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 5,
   },
   table: {
     minWidth: 500,
@@ -111,25 +112,15 @@ const styles = theme => ({
   tableWrapper: {
     overflowX: 'auto',
   },
+  link: {
+    textDecoration: 'none',
+    color: '#333'
+  }
 });
 
 class CustomPaginationActionsTable extends React.Component {
   state = {
-    rows: [
-      createData('Cupcake', 305, 3.7),
-      createData('Donut', 452, 25.0),
-      createData('Eclair', 262, 16.0),
-      createData('Frozen yoghurt', 159, 6.0),
-      createData('Gingerbread', 356, 16.0),
-      createData('Honeycomb', 408, 3.2),
-      createData('Ice cream sandwich', 237, 9.0),
-      createData('Jelly Bean', 375, 0.0),
-      createData('KitKat', 518, 26.0),
-      createData('Lollipop', 392, 0.2),
-      createData('Marshmallow', 318, 0),
-      createData('Nougat', 360, 19.0),
-      createData('Oreo', 437, 18.0),
-    ].sort((a, b) => (a.calories < b.calories ? -1 : 1)),
+    rows: [],
     page: 0,
     rowsPerPage: 5,
   };
@@ -142,6 +133,20 @@ class CustomPaginationActionsTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
+  componentWillReceiveProps(props) {
+    const { productsList, classes } = props;
+    const rows = productsList ? productsList.map((product, i) => 
+      createData(
+        <img src={product['MainPictureUrl'][0]} alt={i} width={30} />,
+        <a href={product.ExternalItemUrl[0]} className={classes.link} target='_blank'>{product['OriginalTitle'][0]}</a>,
+        product['Price'][0]['ConvertedPrice'],
+        product['VendorName'][0],
+        product['ProviderType'][0]
+      )
+    ) : [];
+    this.setState({ rows });
+  }
+
   render() {
     const { classes } = this.props;
     const { rows, rowsPerPage, page } = this.state;
@@ -152,15 +157,26 @@ class CustomPaginationActionsTable extends React.Component {
         <Paper className={classes.root}>
           <div className={classes.tableWrapper}>
             <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Image</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell numeric>Price</TableCell>
+                  <TableCell>Vendor</TableCell>
+                  <TableCell>Source</TableCell>
+                </TableRow>
+              </TableHead>
               <TableBody>
                 {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                   return (
                     <TableRow key={row.id}>
                       <TableCell component="th" scope="row">
-                        {row.name}
+                        {row.img}
                       </TableCell>
-                      <TableCell numeric>{row.calories}</TableCell>
-                      <TableCell numeric>{row.fat}</TableCell>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell numeric>{row.price}</TableCell>
+                      <TableCell>{row.vendor}</TableCell>
+                      <TableCell>{row.source}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -173,7 +189,7 @@ class CustomPaginationActionsTable extends React.Component {
               <TableFooter>
                 <TableRow>
                   <TablePagination
-                    colSpan={3}
+                    colSpan={5}
                     count={rows.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
