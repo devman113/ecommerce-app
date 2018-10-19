@@ -110,16 +110,25 @@ class PersistentDrawer extends React.Component {
     this.setState({ open: false });
   };
 
+  updateGoods = () => {
+    this.props.updateGoods({ ...this.state });
+  }
+
   updateKeyword = search => {
     this.setState({ search });
     this.props.updateGoods({ ...this.state, search });
+  }
+
+  updateProperties = (name, val) => {
+    this.setState({
+      [name]: val,
+    });
   }
 
   updateChecked = (name, checked) => {
     this.setState({
       [name]: checked,
     });
-    console.log(name, checked)
   }
 
   render() {
@@ -187,6 +196,8 @@ class PersistentDrawer extends React.Component {
               <Grid container spacing={24}>
                 <FilterBoard 
                   updateChecked={this.updateChecked}
+                  updateProperties={this.updateProperties}
+                  updateGoods={this.updateGoods}
                 />
                 <TableView 
                   productsList={productsList} 

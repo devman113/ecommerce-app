@@ -91,6 +91,7 @@ class FilterBoard  extends React.Component {
     this.setState({
       [name]: event.target.value,
     });
+    this.props.updateProperties(name, event.target.value);
   };
 
   handleCheckChange = name => event => {
@@ -127,6 +128,7 @@ class FilterBoard  extends React.Component {
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  onChange={this.handleChange('minPrice')}
                 />
                 <TextField
                   id="standard-name"
@@ -137,6 +139,7 @@ class FilterBoard  extends React.Component {
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  onChange={this.handleChange('maxPrice')}
                 />
               </div>
               <div className={classes.flexContainer}>
@@ -248,7 +251,7 @@ class FilterBoard  extends React.Component {
               </div>
             </CardContent>
             <CardActions>
-              <Button className={classes.submitButton}>Learn More</Button>
+              <Button className={classes.submitButton} onClick={this.props.updateGoods}>Update</Button>
             </CardActions>
           </Card>
         </Grid>

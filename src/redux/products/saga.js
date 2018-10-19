@@ -4,10 +4,12 @@ import actions from './actions';
 
 const getProducts = async (payload) => {
   try {
-    let url = 'http://localhost:7001/api/v1/items?framePosition=0&frameSize=20';
+    let url = 'http://localhost:7001/api/v1/items?framePosition=0&frameSize=25';
     if (payload !== null) {
       if (payload.search !== '') url = `${url}&itemTitle=${payload.search}`;
       else url = `${url}&itemTitle=%81`;
+      if (payload.minPrice) url = `${url}&minPrice=${payload.minPrice}`;
+      if (payload.maxPrice) url = `${url}&maxPrice=${payload.maxPrice}`;
     } else {
       url = `${url}&itemTitle=%81`;
     }
