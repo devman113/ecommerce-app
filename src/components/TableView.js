@@ -138,9 +138,9 @@ class CustomPaginationActionsTable extends React.Component {
     const rows = productsList ? productsList.map((product, i) => 
       createData(
         <img src={product['MainPictureUrl'][0]} alt={i} width={30} />,
-        <a href={product.ExternalItemUrl[0]} className={classes.link} target='_blank'>{product['OriginalTitle'][0]}</a>,
-        product['Price'][0]['ConvertedPrice'],
-        product['VendorName'][0],
+        <a href={product.ExternalItemUrl[0]} className={classes.link} target='_blank'>{product['translateTitle']}</a>,
+        product['Price'][0]['FixerConvertedPrice'] ? product['Price'][0]['FixerConvertedPrice'] : product['Price'][0]['ConvertedPrice'] ,
+        product['translateVendorName'],
         product['ProviderType'][0]
       )
     ) : [];

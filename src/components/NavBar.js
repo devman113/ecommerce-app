@@ -99,7 +99,9 @@ class PersistentDrawer extends React.Component {
   state = {
     open: false,
     anchor: 'left',
-    search: ''
+    search: '',
+    currency: 'USD',
+    language: 'en'
   };
 
   handleDrawerOpen = () => {
@@ -116,7 +118,6 @@ class PersistentDrawer extends React.Component {
 
   updateKeyword = search => {
     this.setState({ search });
-    this.props.updateGoods({ ...this.state, search });
   }
 
   updateProperties = (name, val) => {
