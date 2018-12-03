@@ -18,17 +18,18 @@ class App extends Component {
   }
 
   render() {
-    const { productsList } = this.props; 
+    const { productsList, loading } = this.props; 
 
     return (
-      <NavBar updateGoods={this.updateGoods} productsList={productsList} />
+      <NavBar updateGoods={this.updateGoods} productsList={productsList} loading={loading} />
     );
   }
 }
 
 export default connect(
   state => ({
-    productsList: state.Products.productsList
+    productsList: state.Products.productsList,
+    loading: state.Products.loading
   }),
   { getList }
 )(App);

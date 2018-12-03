@@ -133,7 +133,7 @@ class PersistentDrawer extends React.Component {
   }
 
   render() {
-    const { classes, theme, productsList } = this.props;
+    const { classes, theme, productsList, loading } = this.props;
     const { anchor, open, checkedShowImages } = this.state;
 
     const drawer = (
@@ -203,6 +203,7 @@ class PersistentDrawer extends React.Component {
                 <TableView 
                   productsList={productsList} 
                   checkedShowImages={checkedShowImages}
+                  loading={loading}
                 />
               </Grid>
           </main>

@@ -15,6 +15,7 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const actionsStyles = theme => ({
   root: {
@@ -115,6 +116,10 @@ const styles = theme => ({
   link: {
     textDecoration: 'none',
     color: '#333'
+  },
+  progress: {
+    marginTop: '50px',
+    marginLeft: '50px'
   }
 });
 
@@ -148,7 +153,7 @@ class CustomPaginationActionsTable extends React.Component {
   }
 
   render() {
-    const { classes, checkedShowImages } = this.props;
+    const { classes, checkedShowImages, loading } = this.props;
     const { rows, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -166,6 +171,11 @@ class CustomPaginationActionsTable extends React.Component {
                   <TableCell>Source</TableCell>
                 </TableRow>
               </TableHead>
+              {
+                loading && (
+                  <CircularProgress className={classes.progress} />
+                )
+              }
               <TableBody>
                 {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                   return (

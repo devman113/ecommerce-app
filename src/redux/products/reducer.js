@@ -2,12 +2,15 @@ import actions from './actions';
 
 const initState = {
   productsList: [],
+  loading: false
 };
 
 export default function productsReducer(state = initState, action) {
   switch (action.type) {
-  case actions.PRODUCTS_LIST_SUCCESS:
-    return { productsList: action.payload };
+    case actions.PRODUCTS_LIST_REQUEST:
+    return { productsList: [], loading: true };
+    case actions.PRODUCTS_LIST_SUCCESS:
+      return { productsList: action.payload, loading: false };
   default:
     return state;  
   }
