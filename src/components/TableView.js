@@ -164,7 +164,7 @@ class CustomPaginationActionsTable extends React.Component {
         <img src={product['MainPictureUrl'][0]} alt={i} width={30} />,
         <a href={product.ExternalItemUrl[0]} className={classes.link} target='_blank'>{product['translateTitle'] ? product['translateTitle'] : product['OriginalTitle']}</a>,
         product['Price'][0]['FixerConvertedPrice'] ? `${product['Price'][0]['FixerConvertedPrice']}${currencies.find(obj => obj.value === currency)['label']}` : product['Price'][0]['ConvertedPrice'] ,
-        product['translateVendorName'],
+        product['translateVendorName'] ? product['translateVendorName'] : product['VendorName'][0],
         product['ProviderType'][0]
       )
     ) : [];
