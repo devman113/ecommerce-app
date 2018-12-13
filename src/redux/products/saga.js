@@ -4,7 +4,7 @@ import actions from './actions';
 
 const getProducts = async (payload) => {
   try {
-    let url = 'http://localhost:7001/api/v1/items?framePosition=0&frameSize=10';
+    let url = 'http://114.116.120.127:7001/api/v1/items?framePosition=0&frameSize=10';
     if (payload !== null) {
       if (payload.search !== '') url = `${url}&itemTitle=${payload.search}`;
       else url = `${url}&itemTitle=%81`;

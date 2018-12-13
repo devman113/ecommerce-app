@@ -123,6 +123,25 @@ const styles = theme => ({
   }
 });
 
+const currencies = [
+  {
+    value: 'USD',
+    label: '$',
+  },
+  {
+    value: 'EUR',
+    label: '€',
+  },
+  {
+    value: 'BTC',
+    label: '฿',
+  },
+  {
+    value: 'JPY',
+    label: '¥',
+  },
+];
+
 class CustomPaginationActionsTable extends React.Component {
   state = {
     rows: [],
@@ -139,12 +158,12 @@ class CustomPaginationActionsTable extends React.Component {
   };
 
   componentWillReceiveProps(props) {
-    const { productsList, classes } = props;
+    const { productsList, classes, currency } = props;
     const rows = productsList ? productsList.map((product, i) => 
       createData(
         <img src={product['MainPictureUrl'][0]} alt={i} width={30} />,
-        <a href={product.ExternalItemUrl[0]} className={classes.link} target='_blank'>{product['translateTitle']}</a>,
-        product['Price'][0]['FixerConvertedPrice'] ? product['Price'][0]['FixerConvertedPrice'] : product['Price'][0]['ConvertedPrice'] ,
+        <a href={product.ExternalItemUrl[0]} className={classes.link} target='_blank'>{product['translateTitle'] ? product['translateTitle'] : product['OriginalTitle']}</a>,
+        product['Price'][0]['FixerConvertedPrice'] ? `${product['Price'][0]['FixerConvertedPrice']}${currencies.find(obj => obj.value === currency)['label']}` : product['Price'][0]['ConvertedPrice'] ,
         product['translateVendorName'],
         product['ProviderType'][0]
       )
