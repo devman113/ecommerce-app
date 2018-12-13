@@ -382,7 +382,7 @@ class FilterBoard  extends React.Component {
               </div>
             </CardContent>
             <CardActions>
-              <Button className={classes.submitButton} onClick={this.props.updateGoods}>Update</Button>
+              <Button className={classes.submitButton} variant='contained' color='primary' onClick={this.props.updateGoods}>Update</Button>
             </CardActions>
           </Card>
         </Grid>
