@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import NavBar from './components/NavBar'
 import productsActions from './redux/products/actions';
 
-const { getList } = productsActions;
+const { getList, loadMore } = productsActions;
 
 class App extends Component {
 
@@ -17,11 +17,16 @@ class App extends Component {
     getList(options);
   }
 
+  loadMore = options => {
+    const { loadMore } = this.props;
+    loadMore(options);
+  }
+
   render() {
     const { productsList, loading } = this.props; 
 
     return (
-      <NavBar updateGoods={this.updateGoods} productsList={productsList} loading={loading} />
+      <NavBar updateGoods={this.updateGoods} loadMore={this.loadMore} productsList={productsList} loading={loading} />
     );
   }
 }
@@ -31,5 +36,5 @@ export default connect(
     productsList: state.Products.productsList,
     loading: state.Products.loading
   }),
-  { getList }
+  { getList, loadMore }
 )(App);

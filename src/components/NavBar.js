@@ -132,8 +132,8 @@ class PersistentDrawer extends React.Component {
     });
   }
 
-  loadMore = (rows) => {
-    this.props.loadMore(rows, { ...this.state });
+  loadMore = (len) => {
+    this.props.loadMore({ framePosition: len, ...this.state });
   }
 
   render() {

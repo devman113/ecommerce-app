@@ -4,10 +4,10 @@ import actions from './actions';
 
 const getProducts = async (payload) => {
   try {
-    let url = 'http://114.116.120.127:7001/api/v1/items?framePosition=0&frameSize=10';
+    let url = 'http://114.116.120.127:7001/api/v1/items?frameSize=10';
     if (payload !== null) {
-      if (payload.search !== '') url = `${url}&itemTitle=${payload.search}`;
-      else url = `${url}&itemTitle=%81`;
+      if (payload.search !== '') url = `${url}&itemTitle=${payload.search}`;  else url = `${url}&itemTitle=%81`;
+      if (payload.framePosition) url = `${url}&framePosition=${payload.framePosition}`; else url = `${url}&framePosition=0`;
       if (payload.minPrice) url = `${url}&minPrice=${payload.minPrice}`;
       if (payload.maxPrice) url = `${url}&maxPrice=${payload.maxPrice}`;
       if (payload.minMOQ) url = `${url}&minMOQ=${payload.minMOQ}`;
@@ -19,7 +19,7 @@ const getProducts = async (payload) => {
       else if (!payload.checkedAlibaba && payload.checkedTaobao) provider = 'Taobao';
       url = `${url}&provider=${provider}`;
     } else {
-      url = `${url}&itemTitle=%81&provider=Alibaba1688,Taobao`;
+      url = `${url}&framePosition=0&itemTitle=%81&provider=Alibaba1688,Taobao`;
     }
     return await axios.get(url);
   } catch (error) {
@@ -50,9 +50,33 @@ export function* listRequest() {
     } 
   });
 }
+export function* moreRequest() {
+  yield takeLatest('PRODUCTS_MORE_REQUEST', function* ({ payload }) {
+    const productsData = yield getProducts(payload);
+    if (productsData) {
+      let payload = [];
+      if (productsData.data[0].OtapiItemSearchResultAnswer) {
+        payload = productsData.data[0].OtapiItemSearchResultAnswer.Result[0].Items[0].Content[0].Item;
+        if (productsData.data[1].OtapiItemSearchResultAnswer)
+          payload = payload.concat(productsData.data[1].OtapiItemSearchResultAnswer.Result[0].Items[0].Content[0].Item);
+        yield put({
+          type: actions.PRODUCTS_MORE_SUCCESS,
+          payload: payload
+        });
+      }
+      else {
+        console.log('Failed to fetch products list.');
+        yield put({
+          type: actions.PRODUCTS_LIST_ERROR,
+        });
+      } 
+    } 
+  });
+}
 
 export default function* rootSaga() {
   yield all([
     fork(listRequest),
+    fork(moreRequest),
   ]);
 }

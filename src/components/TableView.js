@@ -150,6 +150,10 @@ class CustomPaginationActionsTable extends React.Component {
   };
 
   handleChangePage = (event, page) => {
+    const { rows, rowsPerPage } = this.state;
+    if (page === Math.ceil(rows.length/rowsPerPage) - 1)
+      this.props.loadMore(rows.length);
+
     this.setState({ page });
   };
 
@@ -190,11 +194,6 @@ class CustomPaginationActionsTable extends React.Component {
                   <TableCell>Source</TableCell>
                 </TableRow>
               </TableHead>
-              {
-                loading && (
-                  <CircularProgress className={classes.progress} />
-                )
-              }
               <TableBody>
                 {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                   return (
@@ -235,6 +234,11 @@ class CustomPaginationActionsTable extends React.Component {
             </Table>
           </div>
         </Paper>
+        {
+          loading && (
+            <CircularProgress className={classes.progress} />
+          )
+        }
       </Grid>
     );
   }
